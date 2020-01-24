@@ -530,9 +530,6 @@ if args.task == 'extract':
     extract()
 elif args.task == 'conv':
     fld_out = fld_root_out + '/conv'
-    if args.subreddit_prefix:
-        # XXX diagnostic
-        print("Subreddit being interleaved amongst conversation turns")
     build_conv(fld_out, args.subreddit_prefix)
 else:
     print("Unknown task: %s" % args.task, file=sys.stderr)
