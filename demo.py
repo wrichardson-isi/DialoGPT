@@ -24,6 +24,8 @@ print(f'PROJECT_FOLDER = {PROJECT_FOLDER}')
 parser = argparse.ArgumentParser()
 parser.add_argument('--data', type=str, default='dummy',
                     help='choose from dummy, small and full')
+parser.add_argument('--subreddit_prefix', action='store_true', default=False,
+                    help='Prefix each comment in the training data with the subreddit from which the thread was taken')
 dargs = parser.parse_args()
 
 assert dargs.data == 'dummy' or dargs.data == 'small' or dargs.data == 'full' , \
@@ -64,11 +66,11 @@ if dargs.data == 'dummy':
     cmd = 'bash prepare4db.sh'
     ret = sp.run(cmd.split(' '), stdout=sp.PIPE, stderr=sp.STDOUT, cwd=DATA_FOLDER)
 elif dargs.data == 'small':
-    myCmd = os.popen('cd reddit_extractor; make -j 8; cd ..').read()
+    myCmd = os.popen('cd reddit_extractor; SUBREDDIT_PREFIX={} SIZE=small make -j 8; cd ..'.format(dargs.subreddit_prefix)).read()
     cmd = 'gzip -d ./train.tsv.gz'
     ret = sp.run(cmd.split(' '), stdout=sp.PIPE, stderr=sp.STDOUT, cwd=DATA_FOLDER)
 elif dargs.data == 'full':
-    myCmd = os.popen('cd reddit_extractor; SIZE=full make -j 8; cd ..').read()
+    myCmd = os.popen('cd reddit_extractor; SUBREDDIT_PREFIX={} SIZE=full make -j 8; cd ..'.format(dargs.subreddit_prefix)).read()
     cmd = 'gzip -d ./train.tsv.gz'
     ret = sp.run(cmd.split(' '), stdout=sp.PIPE, stderr=sp.STDOUT, cwd=DATA_FOLDER)
 else:

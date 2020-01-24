@@ -57,7 +57,7 @@ parser.add_argument("--parallel", default=False, type=bool)
 parser.add_argument("--pre_tok", default=False, type=bool, help="whether to tokenize during the extract step")
 parser.add_argument("--clean", default=False, type=bool,
                     help="apply some filters to significantly reduce number of instances")
-parser.add_argument("--subreddit_prefix", default=False, type=bool,
+parser.add_argument("--subreddit_prefix", default=False, action='store_true',
                     help="prefix each turn of the conversation with the name of the subreddit from which it was taken")
 
 args = parser.parse_args()

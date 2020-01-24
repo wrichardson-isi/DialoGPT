@@ -34,7 +34,7 @@ $T/test/$A/%.tsv.gz: $T/test/$P/%/stat.tsv
 
 $T/train/$A/%.tsv.gz: $T/train/$P/%/stat.tsv
 	mkdir -p $T/train/$A
-	python src/reddit.py $(*F) --task=conv $(HASH_FLAG) --keep_keys=$K/$(*F).gz --discard_tgt_keys $K/$(*F)-o.gz --parallel=True $(WORDS_BLOCKLIST) $(SUBREDDITS_BLOCKLIST) --reddit_input $S --reddit_output $T/train --clean True --min_score $(MIN_SCORE) --min_depth $(MIN_DEPTH) --max_depth $(MAX_DEPTH) --use_title $(TITLE) --leaves_only $(LEAVES_ONLY) > $@.log 2>&1
+	python src/reddit.py $(*F) --task=conv $(HASH_FLAG) --keep_keys=$K/$(*F).gz --discard_tgt_keys $K/$(*F)-o.gz --parallel=True $(WORDS_BLOCKLIST) $(SUBREDDITS_BLOCKLIST) --reddit_input $S --reddit_output $T/train --clean True --min_score $(MIN_SCORE) --min_depth $(MIN_DEPTH) --max_depth $(MAX_DEPTH) --use_title $(TITLE) --leaves_only $(LEAVES_ONLY) $(SUBREDDIT_PREFIX_FLAG) > $@.log 2>&1
 	gzip -f $T/train/$A/$(*F).tsv
 
 $T/test/$P/%/stat.tsv: $S/RS_%.bz2 $S/RC_%.bz2
