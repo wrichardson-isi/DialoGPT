@@ -62,5 +62,9 @@ ifndef SIZE
 SIZE=small
 endif
 
+ifeq ($(SUBREDDIT_PREFIX), True)
+SUBREDDIT_PREFIX_FLAG=--subreddit_prefix
+endif
+
 include configs/Makefile.targets.$(SIZE)
 include configs/Makefile.common

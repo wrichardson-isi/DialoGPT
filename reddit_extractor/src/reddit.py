@@ -57,7 +57,7 @@ parser.add_argument("--parallel", default=False, type=bool)
 parser.add_argument("--pre_tok", default=False, type=bool, help="whether to tokenize during the extract step")
 parser.add_argument("--clean", default=False, type=bool,
                     help="apply some filters to significantly reduce number of instances")
-parser.add_argument("--subreddit_prefix", default=False, type=bool,
+parser.add_argument("--subreddit_prefix", default=False, action='store_true',
                     help="prefix each turn of the conversation with the name of the subreddit from which it was taken")
 
 args = parser.parse_args()
@@ -530,6 +530,9 @@ if args.task == 'extract':
     extract()
 elif args.task == 'conv':
     fld_out = fld_root_out + '/conv'
+    if args.subreddit_prefix:
+        # XXX diagnostic
+        print("Subreddit being interleaved amongst conversation turns")
     build_conv(fld_out, args.subreddit_prefix)
 else:
     print("Unknown task: %s" % args.task, file=sys.stderr)
